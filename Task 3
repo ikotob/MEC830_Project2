@@ -1,0 +1,97 @@
+const int trig = 2;
+const int echo = 3;
+const int leftFrwrd = 4;
+const int leftBack = 5;
+const int rightFrwrd = 7;
+const int rightBack = 8;
+
+int duration = 0;
+int distance = 0;
+
+void setup() 
+{
+  pinMode(trig , OUTPUT);
+  pinMode(echo , INPUT);
+  // attachInterrupt(digitalPinToInterrupt(2),trig,HIGH);
+  pinMode(leftFrwrd , OUTPUT);
+  pinMode(leftBack , OUTPUT);
+  pinMode(rightFrwrd , OUTPUT);
+  pinMode(rightBack , OUTPUT);
+  Serial.begin(9600);
+
+}
+
+void loop()
+{
+digitalWrite(trig, LOW);
+delayMicroseconds(2);
+digitalWrite(trig, HIGH);
+delayMicroseconds(10);
+digitalWrite(trig, LOW);
+duration = pulseIn(echo, HIGH);
+distance= (duration*0.034/2);
+Serial.print("Distance: ");
+Serial.println(distance);
+  if(distance<20)
+  {
+    face_left();
+    delay(1000);
+    forward();
+    delay(1000);
+    face_right();
+    delay(1000);
+    forward();
+    delay(1000);
+    face_right();
+    delay(1000);
+    forward();
+    delay(1000);
+    face_left();
+    delay(1000);
+    forward();   
+    delay(1000);
+    stop_wheels();
+    delay(1000);
+  }
+  else
+  {
+    digitalWrite(leftFrwrd , HIGH);
+    digitalWrite(leftBack , LOW);
+    digitalWrite(rightFrwrd , HIGH);
+    digitalWrite(rightBack , LOW);
+  }
+ 
+}
+
+void face_right()
+{
+  digitalWrite(leftFrwrd, HIGH);
+  digitalWrite(leftBack, LOW);
+  digitalWrite(rightBack, HIGH);
+  digitalWrite(rightFrwrd, LOW);
+  
+}
+
+void face_left()
+{
+  digitalWrite(leftFrwrd, LOW);
+  digitalWrite(leftBack, HIGH);
+  digitalWrite(rightBack, LOW);
+  digitalWrite(rightFrwrd, HIGH);
+}
+
+void forward()
+{
+  digitalWrite(leftFrwrd, HIGH);
+  digitalWrite(leftBack, LOW);
+  digitalWrite(rightBack, LOW);
+  digitalWrite(rightFrwrd, HIGH);
+}
+
+void stop_wheels()
+{
+  digitalWrite(leftFrwrd, LOW);
+  digitalWrite(leftBack, LOW);
+  digitalWrite(rightBack, LOW);
+  digitalWrite(rightFrwrd, LOW);
+}

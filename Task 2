@@ -1,0 +1,69 @@
+const int leftFrwrd = 4;
+const int leftBack = 5;
+const int rightFrwrd = 7;
+const int rightBack = 8;
+
+int duration = 0;
+
+void setup() 
+{
+
+  pinMode(leftFrwrd , OUTPUT);
+  pinMode(leftBack , OUTPUT);
+  pinMode(rightFrwrd , OUTPUT);
+  pinMode(rightBack , OUTPUT);
+  Serial.begin(9600);
+
+}
+
+void loop()
+{
+  delayMicroseconds(2);
+  delayMicroseconds(10);
+  forward();
+  delay(5000);
+  face_right();
+  delay(900);
+  forward();
+  delay(5000);
+  face_left();
+  delay(900);
+  forward();
+  delay(5000); 
+  stop_wheels();
+  delay(10000);
+ 
+}
+
+void face_right()
+{
+  digitalWrite(leftFrwrd, HIGH);
+  digitalWrite(leftBack, LOW);
+  digitalWrite(rightBack, HIGH);
+  digitalWrite(rightFrwrd, LOW);
+  
+}
+
+void face_left()
+{
+  digitalWrite(leftFrwrd, LOW);
+  digitalWrite(leftBack, HIGH);
+  digitalWrite(rightBack, LOW);
+  digitalWrite(rightFrwrd, HIGH);
+}
+
+void forward()
+{
+  digitalWrite(leftFrwrd, HIGH);
+  digitalWrite(leftBack, LOW);
+  digitalWrite(rightBack, LOW);
+  digitalWrite(rightFrwrd, HIGH);
+}
+
+void stop_wheels()
+{
+  digitalWrite(leftFrwrd, LOW);
+  digitalWrite(leftBack, LOW);
+  digitalWrite(rightBack, LOW);
+  digitalWrite(rightFrwrd, LOW);
+}
